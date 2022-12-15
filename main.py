@@ -9,14 +9,22 @@ from time import sleep
 from math import sqrt
 from numpy import random
 from tkinter import *
+import keyboard
+
+if keyboard.press
+
+
 
 #Nouvelle partie
-score = 0
-speed0 = 10
-level = 1
+def starty(s) :
+    if s==1:
+        score = 0
+        speed0 = 10
+        level = 1
+
+
 
 #on definit les classes pour les 4 objet et le jeu
-
 class invaders :
     def __init__(self,list, Hpmax, coordX, coordY, speed, freq, hitBox) :
         self.list = []
@@ -51,7 +59,7 @@ class invaders :
 
     def killed(self) :
         for i in len(self.list) :
-            if self.list[i][3] == 0
+            if self.list[i][3] == "0" :
                 self.list[i]
 
 class blocks :
@@ -59,14 +67,18 @@ class blocks :
         self.Hp = Hp
         self.position = position
         self.hitBox = hitBox
+
 class player :
-    def __init__(self, hitbox, Hp, score, name, life, position):
-        self.Hitbox = [1,1]
+    def __init__(self,position hitBox, Hp, score, name, life, ):
+        self.hitBox = [1,1]
         self.Life = 3
         self.Score = "0"
         self.Name = "no name"
         self.Hp = 1
         self.Position = [0,1]
+    def move(self) :
+
+
 
 class missiles :
     def __init__(self, position, hitbox ):

@@ -5,7 +5,7 @@ CSDEV TP4
 Space_Invaders
 Fenetre de jeu
 """
-
+from main import *
 from tkinter import * #morrel dit ok
 
 window = Tk()
@@ -15,30 +15,32 @@ window.title("Space Invaders")
 height = 800 
 width = 600
 
-canvas = Canvas(window, width = width, height = height)
+canvas = Canvas(window, width = width, height = height, bg="black")
 canvas.pack()
 
 #mise en place background
-photo_background = PhotoImage(file = "background.png")
-photo_backgroundbis = photo_background.zoom(x = )
-canvas.create_image(0, 0, image=photo_backgroundbis)
+#photo_background = PhotoImage(file = "background.png")
+#photo_backgroundbis = photo_background.zoom(x = )
+#canvas.create_image(0, 0, image=photo_backgroundbis)
 
 
 
 #Création des différentes frames
+ranking = Frame(window, relief="groove")
+ranking.pack(side="left")
+menu = Frame(window, relief="groove", bg="white")
+menu.pack(side="bottom")
 
 
-Menu = Frame(window)
+s=0
+def schange():
+    s=1
+    starty(s)
+    
 
+buttonQuitter = Button(menu, text = "Quit game", command = window.destroy).pack()
+buttonStart = Button(window, text = "Start game", command = schange).pack()
 
-
-"""
-buttonStart = Button(window, text = "Start game", command = Start) #fefinir fonction start
-buttonStart.pack()
-"""
-
-buttonQuitter = Button(window, text = "Quit game", command = window.destroy)
-buttonQuitter.pack()
 
 
 #Score à récup via objet player in game
