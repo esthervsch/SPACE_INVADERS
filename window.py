@@ -16,7 +16,7 @@ window.title("Space Invaders")
 height = 400
 width = 300
 photo_background = PhotoImage(file = "background.png")
-canevas = Canvas(window, width = width, height = height, bg = 'black')
+canevas = Canvas(window, width = width, height = height, bg = 'background.png')
 canevas.pack()
 
 #Création des différentes frames

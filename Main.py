@@ -27,5 +27,13 @@ class players :
         self.Name = "no name"
         self.Hp = 1
         self.Position = [0,1]
-    
+
+class missiles :
+    def __init__(self, Position, Hitbox ):
+        self.Hitbox = [1,1]
+        self.Position = [0,0]
+        
+class Game :
+    def __init__ (self, world, players, missiles, blocks, invaders):
+        
 
