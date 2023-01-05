@@ -4,6 +4,7 @@ from Missile import *
 from Invader import *
 from Block import *
 from tkinter import * #morrel dit ok
+import keyboard 
 window = Tk()
 window.title("Space Invaders")
 canvas = Canvas(window, width = 100, height = 100, bg="black")
