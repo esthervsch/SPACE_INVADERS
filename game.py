@@ -3,7 +3,7 @@ Esther Veschambre et Bertrand Gaillet
 15/12/2022
 CSDEV TP4
 Space_Invaders
-Classe game
+Classe Game
 """
 
 from math import sqrt
@@ -16,18 +16,13 @@ import keyboard #mettre ds  programme principal
 
 
 
-#Nouvelle partie
-def starty(s) :
-    if s==1:
-        score = 0
-        speed0 = 10
-        level = 1
+
 
 
 
         
-class game :
-    def __init__ (self, world,  level, difficulty, speed):
+class Game :
+    def __init__ (self, world,  level, difficulty, speed) :
         self.world = world
         self.level = level 
         self.difficulty = sqrt(level)

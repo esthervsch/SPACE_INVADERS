@@ -5,7 +5,11 @@ CSDEV TP4
 Space_Invaders
 Fenetre de jeu
 """
-from main import *
+from Game import *
+from Player import *
+from Missile import *
+from Invader import *
+from Block import *
 from tkinter import * #morrel dit ok
 
 window = Tk()
