@@ -3,12 +3,12 @@ Esther Veschambre et Bertrand Gaillet
 15/12/2022
 CSDEV TP4
 Space_Invaders
-Classe invaders
+Classe Invader
 """
 from numpy import random
 from time import sleep
 
-class invaders :                #cette classe décrit 3 types d'invaders
+class Invader :                #cette classe décrit 3 types d'invaders
     def __init__(self,list, Hpmax, coordX, coordY, speed, freq, hitBox) :
         self.list = []
         self.Hpmax = [100*game.difficulty, 150*game.difficulty, 250*game.difficulty]

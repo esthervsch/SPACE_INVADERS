@@ -3,12 +3,12 @@ Esther Veschambre et Bertrand Gaillet
 15/12/2022
 CSDEV TP4
 Space_Invaders
-Classe blocks
+Classe Block
 """
 
 
 
-class blocks :
+class Block :
     def __init__(self, Hp, position, hitBox):
         self.Hp = Hp
         self.position = position
