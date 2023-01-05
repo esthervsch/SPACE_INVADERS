@@ -39,7 +39,7 @@ menu.pack(side="bottom")
 s=0
 def schange():
     s=1
-    start(s)
+    starty(s)
     
 
 buttonQuitter = Button(menu, text = "Quit game", command = window.destroy).pack()
