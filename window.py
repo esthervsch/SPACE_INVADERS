@@ -5,7 +5,7 @@ CSDEV TP4
 Space_Invaders
 Fenetre de jeu
 """
-from main import *
+#from main import *
 from tkinter import * #morrel dit ok
 
 window = Tk()
@@ -50,7 +50,7 @@ canvas.create_text(150, 50, text="Score : "+str(score), fill="white", font=('Hel
 canvas.pack()
 
 #déplacement alien
-"""
+
 img_alien = PhotoImage(file="background.png")
 Alien = canvas.create_image(10, 10, anchor= N, image=img_alien)
 x1 = 20 
@@ -59,10 +59,12 @@ missile = canvas.create_rectangle(x1, y1, x1 + 10, y1 + 50,fill='red')
 
 def move(event):
     if event.char == "q":
+        player.move(-10)
         canvas.move(Alien, -10, 0)
     elif event.char == "d":
+        player.move(10)
         canvas.move(Alien, 10, 0)
 window.bind("<Key>", move)
-"""
+
 
 window.mainloop()

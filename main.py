@@ -11,7 +11,7 @@ from numpy import random
 from tkinter import *
 import keyboard
 
-if keyboard.press
+
 
 
 
@@ -75,9 +75,11 @@ class player :
         self.Score = "0"
         self.Name = "no name"
         self.Hp = 1
-        self.Position = [0,1]
-    def move(self) :
-
+        self.x = 400
+    
+    
+    def move(self, dx) :
+        self.x += dx
 
 
 class missiles :
