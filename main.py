@@ -3,7 +3,7 @@ Esther Veschambre et Bertrand Gaillet
 15/12/2022
 CSDEV TP4
 Space_Invaders
-Programme principal
+
 """
 from time import sleep
 from math import sqrt
