@@ -1,13 +1,15 @@
 from Game import *
-from Player import *
+from Player import Player
 from Missile import *
 from Invader import *
 from Block import *
 from tkinter import * #morrel dit ok
-import keyboard 
+#import keyboard 
 window = Tk()
 window.title("Space Invaders")
-canvas = Canvas(window, width = 100, height = 100, bg="black")
+height = 800
+width = 600
+canvas = Canvas(window, width = width, height = height, bg="black")
 canvas.pack()
 
 
@@ -20,16 +22,21 @@ def starty(s) :
         speed0 = 10
         level = 1
 
+player = Player(width/2, height-78)  #78 = hauteur image +10
 
-
-img_player = PhotoImage(file="")
-player = canvas.create_image(Player.coordX ,Player.coordY , anchor= N, image=img_player)
-
-
-
-
+img_player = PhotoImage(file="player.png")
+player_vue = canvas.create_image(player.coordX ,player.coordY , anchor= N, image=img_player)
+if event(CHAR) == 
 
 
 
 
+
+
+
+
+
+
+
+window.mainloop()
 
