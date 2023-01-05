@@ -9,16 +9,6 @@ Classe Game
 from math import sqrt
 
 from tkinter import *
-
-
-
-
-
-
-
-
-
-
         
 class Game :
     def __init__ (self, world,  level, difficulty, speed) :
