@@ -10,8 +10,8 @@ Classe Missile
 
 class Missile :
     def __init__(self, coordX, coordY, points) :
-        self.coordX = #retrieve from ship
-        self.coordY = #retrieve from ship
+        self.coordX = 0#retrieve from ship
+        self.coordY = 0#retrieve from ship
         self.points = self.difficulty*10
     def move(self) :
         self.coordY += game.speed*5

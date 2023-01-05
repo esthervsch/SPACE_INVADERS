@@ -41,7 +41,7 @@ class Invader :                #cette classe décrit 3 types d'invaders
         sleep(1)        #répete le mouvement toutes les secondes
         invaders.move(self)
 
-    def fire(self) :
+    #def fire(self) :
         
 
     def killed(self) :

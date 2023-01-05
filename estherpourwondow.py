@@ -1,6 +1,13 @@
-
-
-
+from Game import *
+from Player import *
+from Missile import *
+from Invader import *
+from Block import *
+from tkinter import * #morrel dit ok
+window = Tk()
+window.title("Space Invaders")
+canvas = Canvas(window, width = 100, height = 100, bg="black")
+canvas.pack()
 
 
 
@@ -14,8 +21,8 @@ def starty(s) :
 
 
 
-
-
+img_player = PhotoImage(file="")
+player = canvas.create_image(Player.coordX ,Player.coordY , anchor= N, image=img_player)
 
 
 

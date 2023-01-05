@@ -9,10 +9,10 @@ Classe Player
 
 class Player :
     def __init__(self, coordX, coordY, speed, freq, Hp, score, name) :
-        self.coordX = #mileu pour le début
-        self.coordY = #bas de jeu, invariable
+        self.coordX = 0#mileu pour le début
+        self.coordY = 0#bas de jeu, invariable
         self.speed = 10
         self.score = 0
         self.name = "no name" #inutile?
         self.Hp = 1000
-    def move(self) :
+    #def move(self) :

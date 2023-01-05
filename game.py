@@ -11,7 +11,7 @@ from math import sqrt
 from tkinter import *
 
 
-import keyboard #mettre ds  programme principal
+#import keyboard #mettre ds  programme principal
 
 
 
