@@ -8,7 +8,7 @@ Fenetre de jeu
 from Game import *
 from Player import *
 from Missile import *
-from Invader import *
+#from Invader import *
 from Block import *
 from tkinter import * #morrel dit ok
 
@@ -39,7 +39,7 @@ menu.pack(side="bottom")
 s=0
 def schange():
     s=1
-    starty(s)
+    start(s)
     
 
 buttonQuitter = Button(menu, text = "Quit game", command = window.destroy).pack()
