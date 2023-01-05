@@ -3,11 +3,11 @@ Esther Veschambre et Bertrand Gaillet
 15/12/2022
 CSDEV TP4
 Space_Invaders
-
+Classe game
 """
-from time import sleep
+
 from math import sqrt
-from numpy import random
+
 from tkinter import *
 
 
