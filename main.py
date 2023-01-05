@@ -109,6 +109,6 @@ def score() :
 
 
 """
-
+#Q>vfoi
 
 #Pour ajouter éléments à tk : créér un compte pour chaque list, if compte varie : ajouter / supr élement
