@@ -8,11 +8,12 @@ Classe player
 
 
 class player :
-    def __init__(self,position hitBox, Hp, score, name, life, ):
-        self.hitBox = [1,1]
-        self.Life = 3
-        self.Score = "0"
-        self.Name = "no name"
-        self.Hp = 1
-        self.Position = [0,1]
+    def __init__(self, coordX, coordY, speed, freq, Hp, score, name):
+        self.coordX = #mileu pour le début
+        self.coordY = #bas de jeu, invariable
+        self.speed = 10
+        self.score = 0
+        self.name = "no name" #inutile?
+        self.Hp = 1000
     def move(self) :
+        

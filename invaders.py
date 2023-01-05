@@ -5,6 +5,8 @@ CSDEV TP4
 Space_Invaders
 Classe invaders
 """
+from numpy import random
+from time import sleep
 
 class invaders :                #cette classe décrit 3 types d'invaders
     def __init__(self,list, Hpmax, coordX, coordY, speed, freq, hitBox) :
