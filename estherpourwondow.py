@@ -26,7 +26,7 @@ player = Player(width/2, height-78)  #78 = hauteur image +10
 
 img_player = PhotoImage(file="player.png")
 player_vue = canvas.create_image(player.coordX ,player.coordY , anchor= N, image=img_player)
-if event(CHAR) == 
+#if event(CHAR) == 
 
 
 
