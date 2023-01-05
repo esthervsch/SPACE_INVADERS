@@ -5,7 +5,9 @@ CSDEV TP4
 Space_Invaders
 Classe Game
 """
-wdrhdh
+
+
+
 from math import sqrt
 
 from tkinter import *
