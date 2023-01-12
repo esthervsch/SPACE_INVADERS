@@ -19,8 +19,7 @@ class Invader :                #cette classe décrit 3 types d'invaders
         self.freq = 3
         self.imagefile = ["images/invader1.png", "images/invader2.png", "images/invader3.png"]
         
-
-
+ 
     def move(self) :
         #On déplace en fonction du type d'invader
         #type 1 :mouvements transversaux
@@ -40,13 +39,3 @@ class Invader :                #cette classe décrit 3 types d'invaders
             self.coordY += self.speed[1]*2
     #def fire(self) :
         
-
-    def killed(self) :
-        for i in len(self.list) :
-            if self.list[i][3] == "0" :
-                self.list[i]
-
-
-
-
-
