@@ -5,14 +5,15 @@ CSDEV TP4
 Space_Invaders
 Classe Invader
 """
+import Game
 import random
 from time import sleep
 
 class Invader :                #cette classe décrit 3 types d'invaders
     def __init__(self,list, Hpmax, coordX, coordY, speed, freq, hitBox) :
         self.list = []
-        self.Hpmax = [100*game.difficulty, 150*game.difficulty, 250*game.difficulty]
-        self.speed = game.speed         #dépend du level
+        self.Hpmax = [100*Game.difficulty, 150*Game.difficulty, 250*Game.difficulty]
+        self.speed = Game.speed         #dépend du level
         self.freq = 3
 
     def pop_up(self) :          #gère l'apparition des invaders
@@ -39,7 +40,7 @@ class Invader :                #cette classe décrit 3 types d'invaders
                 self.list[i][1] += self.speed
                 self.list[i][2] += self.speed
         sleep(1)        #répete le mouvement toutes les secondes
-        invaders.move(self)
+        Invader.move(self)
 
     #def fire(self) :
         

@@ -61,13 +61,13 @@ Alien = canvas.create_image(10, 10, anchor= N, image=img_alien)
 x1 = 20 
 y1 = 20
 missile = canvas.create_rectangle(x1, y1, x1 + 10, y1 + 50,fill='red')
-
+"""
 def move(event):
     if event.char == "q":
         canvas.move(Alien, -10, 0)
     elif event.char == "d":
         canvas.move(Alien, 10, 0)
 window.bind("<Key>", move)
-"""
+
 
 window.mainloop()

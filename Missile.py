@@ -3,7 +3,7 @@ Esther Veschambre et Bertrand Gaillet
 15/12/2022
 CSDEV TP4
 Space_Invaders
-Classe Missile
+Classe MissSile
 """
 
 
@@ -14,5 +14,5 @@ class Missile :
         self.coordY = 0#retrieve from ship
         self.points = self.difficulty*10
     def move(self) :
-        self.coordY += game.speed*5
+        self.coordY += Game.speed*5
 

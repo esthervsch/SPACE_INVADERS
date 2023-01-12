@@ -1,8 +1,8 @@
-from game import *
-from Player import Player
-from Missile import *
-from Invader import *
-from Block import *
+import Game
+import Player
+import Missile 
+import Invader
+import Block
 from tkinter import * #morrel dit ok
 
 window = Tk()
