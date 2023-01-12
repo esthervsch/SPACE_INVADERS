@@ -5,15 +5,18 @@ CSDEV TP4
 Space_Invaders
 Classe Invader
 """
-import Game
+from Game import Game
 from time import sleep
-
+game = Game(1) #a retier
 class Invader :                #cette classe décrit 3 types d'invaders
-    def __init__(self, coordX, images, coordY, Hpmax, speed, freq) :
-        self.Hpmax = [100*Game.difficulty, 150*Game.difficulty, 250*Game.difficulty]
-        self.speed = Game.speed         #dépend du level
+    def __init__(self, coordX, coordY, type) :
+        self.coordX = coordX
+        self.coordY = coordY
+        self.type = type
+        self.Hp = [100*game.difficulty, 150*game.difficulty, 250*game.difficulty]
+        self.speed = game.speed         #dépend du level
         self.freq = 3
-        self.images = ["images/invader1.png", "images/invader2.png", "images/invader3.png"]
+        self.imagefile = ["images/invader1.png", "images/invader2.png", "images/invader3.png"]
         
 
 

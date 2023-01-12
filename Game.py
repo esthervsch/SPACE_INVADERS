@@ -6,15 +6,14 @@ Space_Invaders
 Classe Game
 """
 
-
+speed0 =1 #A retirer
 
 from math import sqrt
 
 from tkinter import *
         
 class Game :
-    def __init__ (self, world,  level, difficulty, speed) :
-        self.world = world
+    def __init__ (self, level) :
         self.level = level 
         self.difficulty = sqrt(level)
         self.speed = speed0*self.difficulty

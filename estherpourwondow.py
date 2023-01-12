@@ -40,17 +40,18 @@ list_invader=[]
 
 def pop_up_invader() :          #gère l'apparition des invaders
     coordX = width/2
-    coordY = 0
-    invader = Invader(coordX, coordY)  #centre de la fenetre en haut
-    type = random.choice((1, 2, 3), p=[0.5, 0.35, 0.15]) #genère un nombre aléatoire entre 1 et 3 avec différentes probabilités pour choisir le type d'invader
-    img_invader_file = invader.images[type-1] #on lui assigne l'image corespondante
-    img_invader = PhotoImage(file = img_invader_file)
-    Hp = invader.Hpmax[type-1]
-    invadercarac = [type, coordX, coordY, Hp]     #on créée une liste ragrouppant les caractéristiques de l'invader aléaoir créé
-    list_invader.append(invadercarac)           #On ajoute l"invader à la liste d'invader
-    invader_view = canvas.create_image(invader.coordX, invader.coordY, image=img_invader)#invader apparait
-    sleep(10)       #nouvel invader toutes les 10s
-pop_up_invader()
+    coordY = 100
+    type = random.choice([1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,3,3,3]) #genère un nombre aléatoire entre 1 et 3 avec différentes probabilités pour choisir le type d'invader :(1, 2, 3), p=[0.5, 0.35, 0.15]
+    invader = Invader(coordX, coordY, type)  #centre de la fenetre en haut
+    invader.imagefile = invader.imagefile[invader.type-1] #on lui assigne l'image corespondante (remplace la liste par le choix)
+    invader.Hp = invader.Hp[type-1]
+    return list_invader.append(invader)           #On ajoute l"invader à la liste d'invaders
+
+pop_up_invader()#on attend pas pour faire apparaitre le premier invader
+window.after(10000, pop_up_invader) #nouvel invader toutes les 10s
+newinvader = list_invader[len(list_invader)-1]
+img_invader = PhotoImage(file = newinvader.imagefile)
+invader_view = canvas.create_image(newinvader.coordX, newinvader.coordY, image=img_invader)#invader apparait
 
 def clavier(event) :
     key = event.keysym
