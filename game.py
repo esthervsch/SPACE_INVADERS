@@ -3,7 +3,7 @@ Esther Veschambre et Bertrand Gaillet
 15/12/2022
 CSDEV TP4
 Space_Invaders
-Classe Game
+Classe game
 """
 
 
@@ -12,7 +12,7 @@ from math import sqrt
 
 from tkinter import *
         
-class Game :
+class game :
     def __init__ (self, world,  level, difficulty, speed) :
         self.world = world
         self.level = level 
