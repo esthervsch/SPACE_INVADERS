@@ -5,7 +5,7 @@ CSDEV TP4
 Space_Invaders
 Classe Invader
 """
-from numpy import random
+import random
 from time import sleep
 
 class Invader :                #cette classe décrit 3 types d'invaders
