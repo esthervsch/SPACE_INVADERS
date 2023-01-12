@@ -25,16 +25,13 @@ class Invader :                #cette classe décrit 3 types d'invaders
         #type 1 :descend
         #type 2 :mouvements tranversaux
         #type 3 : descend et mouvements transversaux
-        for i in len(self.list) :
-            if self.list[i][0] == 1 :
-                self.list[i][2] += self.speed       #on ajout à l'ordonnée une valeur dépendant du niveau 
-            if self.list[i][0] == 2 :
-                self.list[i][1] += self.speed
-            if self.list[i][0] == 3 :
-                self.list[i][1] += self.speed
-                self.list[i][2] += self.speed
-        sleep(1)        #répete le mouvement toutes les secondes
-        Invader.move(self)
+        if self.type == 1 :
+            self.coordY += self.speed       #on ajout à l'ordonnée une valeur dépendant du niveau 
+        if self.type == 2 :
+            self.coordX += self.speed
+        if self.type == 3 :
+            self.coordX += self.speed
+            self.coordY += self.speed
 
     #def fire(self) :
         
