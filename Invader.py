@@ -6,25 +6,16 @@ Space_Invaders
 Classe Invader
 """
 import Game
-import random
 from time import sleep
 
 class Invader :                #cette classe décrit 3 types d'invaders
-    def __init__(self,list, Hpmax, coordX, coordY, speed, freq, hitBox) :
-        self.list = []
+    def __init__(self, coordX, images, coordY, Hpmax, speed, freq) :
         self.Hpmax = [100*Game.difficulty, 150*Game.difficulty, 250*Game.difficulty]
         self.speed = Game.speed         #dépend du level
         self.freq = 3
+        self.images = ["images/invader1.png", "images/invader2.png", "images/invader3.png"]
+        
 
-    def pop_up(self) :          #gère l'apparition des invaders
-        type = random.choice((1, 2, 3), p=[0.5, 0.35, 0.15]) #genère un nombre aléatoire entre 1 et 3 avec différentes probabilités pour choisir le type d'invader
-        coordX = 200 # on met en abscisse le centre de la fenetre
-        coordY = 0
-        Hp = self.Hpmax[type-1]
-        invader= [type, coordX, coordY, Hp]     #on créée une liste ragrouppant les caractéristiques de l'invader aléaoir créé
-        self.list.append(invader)           #On ajoute l"invader à la liste d'invader
-        #invader apparait
-        sleep(10)       #nouvel invader toutes les 10s
 
     def move(self) :
         #On déplace en fonction du type d'invader

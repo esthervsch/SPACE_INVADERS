@@ -4,6 +4,8 @@ from Missile import *
 from Invader import *
 from Block import *
 from tkinter import * #morrel dit ok
+import random
+from time import sleep
 
 window = Tk()
 window.title("Space Invaders")
@@ -27,24 +29,28 @@ def starty(s) :
 #Cargement des images
 #image du joueur
 player = Player(width/2, height-78)  #78 = hauteur image +10
-img_player = PhotoImage(file="invader1.png")
+img_player = PhotoImage(file="images/player.png")
 player_view = canvas.create_image(player.coordX, player.coordY, image=img_player)
 
 #images des invaders
-invader = Invader(width/2, height-78)  #78 = hauteur image +10
-img_player = PhotoImage(file="invader1.png")
-player_view = canvas.create_image(player.coordX, player.coordY, image=img_player)
+list_invader=[]
 
-def pop_up_invader(invader) :          #gère l'apparition des invaders
-        type = random.choice((1, 2, 3), p=[0.5, 0.35, 0.15]) #genère un nombre aléatoire entre 1 et 3 avec différentes probabilités pour choisir le type d'invader
-        coordX = width/2 # on met en abscisse le centre de la fenetre
-        coordY = 0
-        Hp = invader.Hpmax[type-1]
-        invadercarac = [type, coordX, coordY, Hp]     #on créée une liste ragrouppant les caractéristiques de l'invader aléaoir créé
-        invader.list.append(invadercarac)           #On ajoute l"invader à la liste d'invader
-        #invader apparait
-        sleep(10)       #nouvel invader toutes les 10s
 
+
+
+def pop_up_invader() :          #gère l'apparition des invaders
+    coordX = width/2
+    coordY = 0
+    invader = Invader(coordX, coordY)  #centre de la fenetre en haut
+    type = random.choice((1, 2, 3), p=[0.5, 0.35, 0.15]) #genère un nombre aléatoire entre 1 et 3 avec différentes probabilités pour choisir le type d'invader
+    img_invader_file = invader.images[type-1] #on lui assigne l'image corespondante
+    img_invader = PhotoImage(file = img_invader_file)
+    Hp = invader.Hpmax[type-1]
+    invadercarac = [type, coordX, coordY, Hp]     #on créée une liste ragrouppant les caractéristiques de l'invader aléaoir créé
+    list_invader.append(invadercarac)           #On ajoute l"invader à la liste d'invader
+    invader_view = canvas.create_image(invader.coordX, invader.coordY, image=img_invader)#invader apparait
+    sleep(10)       #nouvel invader toutes les 10s
+pop_up_invader()
 
 def clavier(event) :
     key = event.keysym
