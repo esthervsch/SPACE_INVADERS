@@ -22,10 +22,29 @@ def starty(s) :
         speed0 = 10
         level = 1
 
-player = Player(width/2, height-78)  #78 = hauteur image +10
 
-img_player = PhotoImage(file="player.png")
+
+#Cargement des images
+#image du joueur
+player = Player(width/2, height-78)  #78 = hauteur image +10
+img_player = PhotoImage(file="invader1.png")
 player_view = canvas.create_image(player.coordX, player.coordY, image=img_player)
+
+#images des invaders
+invader = Invader(width/2, height-78)  #78 = hauteur image +10
+img_player = PhotoImage(file="invader1.png")
+player_view = canvas.create_image(player.coordX, player.coordY, image=img_player)
+
+def pop_up_invader(invader) :          #gère l'apparition des invaders
+        type = random.choice((1, 2, 3), p=[0.5, 0.35, 0.15]) #genère un nombre aléatoire entre 1 et 3 avec différentes probabilités pour choisir le type d'invader
+        coordX = width/2 # on met en abscisse le centre de la fenetre
+        coordY = 0
+        Hp = invader.Hpmax[type-1]
+        invadercarac = [type, coordX, coordY, Hp]     #on créée une liste ragrouppant les caractéristiques de l'invader aléaoir créé
+        invader.list.append(invadercarac)           #On ajoute l"invader à la liste d'invader
+        #invader apparait
+        sleep(10)       #nouvel invader toutes les 10s
+
 
 def clavier(event) :
     key = event.keysym
