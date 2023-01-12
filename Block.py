@@ -33,19 +33,16 @@ class Block :
         """
 
         self.Position = pPosition
-        self.Image0 = 'Protection{}-D0.gif'.format(pNumero) #Permet d'afficher chacune des 5 textures correspondant au dégats subbits
-        self.Image1 = 'Protection{}-D1.gif'.format(pNumero)
-        self.Image2 = 'Protection{}-D2.gif'.format(pNumero)
-        self.Image3 = 'Protection{}-D3.gif'.format(pNumero)
-        self.Image4 = 'Protection{}-D4.gif'.format(pNumero)
+        self.color0 = 'blue' #Permet d'afficher chacune des 5 couleurs correspondant aux dégats subbits
+        self.color1 = 'green'
+        self.color2 = 'yellow'
+        self.color3 = 'orange'
+        self.color4 = 'red'
         self.DegatSubit = 0
 
         # si tu veux les dessiner mais galère de faire des trou, peut être faire des carrés plus petit ?
         # create_rectangle(0, 0, 100, 100, fill="blue", outline = 'blue')
-        self.PixelArt = PhotoImage(master=pWindow,
-                                   file='PixelArts/Protections/' + self.Image0)
-        self.imageOnCanvas = pCanevas.create_image(self.Position[0], self.Position[1],
-                                                   image=self.PixelArt) #Affichage sur le canevas
+        self.imageOnCanvas = pCanevas.create_rectangle(0, 0, 100, 100, fill=self.color0, outline = 'black')
 
     def AffichageBloc(self, pWindow, pCanevas):
         """
@@ -64,16 +61,15 @@ class Block :
 
         """
         if self.DegatSubit == 0:    #Si le bloc a subit 0 dégat, etc...
-            self.Image = self.Image0
+            self.Image = self.color0
         if self.DegatSubit == 1:
-            self.Image = self.Image1
+            self.Image = self.color1
         elif self.DegatSubit == 2:
-            self.Image = self.Image2
+            self.Image = self.color2
         elif self.DegatSubit == 3:
-            self.Image = self.Image3
+            self.Image = self.color3
         elif self.DegatSubit == 4:
-            self.Image = self.Image4
+            self.Image = self.color4
 
-        self.PixelArt = PhotoImage(master=pWindow,
-                                   file='PixelArts/Protections/' + self.Image)
+        self.PixelArt = pCanevas.create_rectangle(0, 0, 100, 100, fill=self.color0, outline = 'black')
         pCanevas.itemconfig(self.imageOnCanvas, image=self.PixelArt)
