@@ -5,11 +5,11 @@ CSDEV TP4
 Space_Invaders
 Fenetre de jeu
 """
-import Game
-import Player
-import Missile 
-import Invader
-import Block
+from Game import *
+from Player import *
+from Missile import *
+from Invader import *
+from Block import *
 from tkinter import * #morrel dit ok
 from estherpourwondow import *
 

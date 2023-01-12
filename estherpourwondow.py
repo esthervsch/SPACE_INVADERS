@@ -1,14 +1,14 @@
-import Game
-import Player
-import Missile 
-import Invader
-import Block
+from Game import *
+from Player import *
+from Missile import *
+from Invader import *
+from Block import *
 from tkinter import * #morrel dit ok
 
 window = Tk()
 window.title("Space Invaders")
-height = 800
-width = 600
+height = 600
+width = 400
 canvas = Canvas(window, width = width, height = height, bg="black")
 canvas.pack()
 
@@ -25,21 +25,16 @@ def starty(s) :
 player = Player(width/2, height-78)  #78 = hauteur image +10
 
 img_player = PhotoImage(file="player.png")
-player_view = canvas.create_image(player.coordX ,player.coordY , anchor= N, image=img_player)
+player_view = canvas.create_image(player.coordX, player.coordY, image=img_player)
 
-
-def keyboard(event) :
-    global playercoordX,playercoordY
+def clavier(event) :
     key = event.keysym
-    if key == 'left' :
-        playercoordX -= 10
-    if key == 'right' :
-        playercoordX += 10
-    canvas.coords(player_view, player.coordX + playercoordX, player.coordY)
-
-
-
-
+    if key == 'Left' :
+        player.coordX -= 5
+    if key == 'Right' :
+        player.coordX += 5
+    canvas.coords(player_view, player.coordX , player.coordY)
+window.bind('<Key>',clavier)
 
 
 window.mainloop()
