@@ -9,11 +9,11 @@ from Game import Game
 import random
 game = Game(1) #a retier
 class Invader :                #cette classe décrit 3 types d'invaders
-    def __init__(self, coordX, coordY, type, name) :
+    def __init__(self, coordX, coordY, type) :
         self.coordX = coordX
         self.coordY = coordY
         self.type = type
-        self.name = name
+        self.view = None
         self.Hp = [100*game.difficulty, 150*game.difficulty, 250*game.difficulty]
         self.speed = [game.speed,game.speed]         #dépend du level
         self.freq = 3
