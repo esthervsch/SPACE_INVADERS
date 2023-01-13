@@ -70,6 +70,17 @@ def move_invaders() :
     window.after(200, move_invaders) #répete le mouvement toutes les secondes
 move_invaders()
 
+#Apparition des tirs
+list_missiles = [] #liste des invaders en tant qu'objet
+list_missiles_img = [] #liste des invaders en tant qu'images
+for i in range(500) :
+    globals()['img_missile' + str(i-1)] = None
+    list_missiles_img.append('img_missile' + str(i-1))
+    
+def pop_up_missile() :
+    for val in list_invader
+
+
 #Perte de vie (player, invader ou bloc)
 def die() :
     if player.Hp <= 0 :
