@@ -12,9 +12,8 @@ class Missile :
     def __init__(self, coordX, coordY) :
         self.coordX = coordX
         self.coordY = coordY
-        self.coordYend = coordY + 10
         self.view = None
-        self.points = game.difficulty*10
+        self.Hp = 20 #nbr de points retirer quand il touche une cible
 
     def move(self, sens) :
         self.coordY += game.speed*sens*15

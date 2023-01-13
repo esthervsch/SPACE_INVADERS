@@ -25,21 +25,23 @@ def starty(s) :
         level = 1
 
 
+list_missile_player = [] #liste des missiles du joueur en tant qu'objet
+list_invader = [] #liste des invaders en tant qu'objet
+list_invader_img = [] #liste des invaders en tant qu'images
+for i in range(100) :
+    globals()['img_invader' + str(i-1)] = None
+    list_invader_img.append('img_invader' + str(i-1))
+num_invader = 0
+list_missile_invader = [] #liste des missiles d'invader en tant qu'objet
+list_bloc = []
 
-#Cargement des images
+#Chargement des images
 #image du joueur
 player = Player(width/2, height-78)  #78 = hauteur image +10
 img_player = PhotoImage(file="images/player.png")
 player_view = canvas.create_image(player.coordX, player.coordY, image=img_player)
 
 #images des invaders
-list_invader = [] #liste des invaders en tant qu'objet
-list_invader_img = [] #liste des invaders en tant qu'images
-for i in range(100) :
-    globals()['img_invader' + str(i-1)] = None
-    list_invader_img.append('img_invader' + str(i-1))
-
-num_invader = 0
 def pop_up_invader() :          #gère l'apparition des invaders
     coordX = width/2
     coordY = 100
@@ -68,66 +70,85 @@ def move_invaders() :
 move_invaders()
 
 #Apparition des tirs des invaders
-list_missiles_invader = [] #liste des missiles d'invader en tant qu'objet
-
-
 def invader_fire() :
     for invader in list_invader :
         missile = Missile(invader.coordX, invader.coordY)
-        list_missiles_invader.append(missile)
-        missile.view = canvas.create_line(missile.coordX, missile.coordY, missile.coordX, missile.coordYend, fill = 'red')
+        list_missile_invader.append(missile)
+        missile.view = canvas.create_line(missile.coordX, missile.coordY, missile.coordX, missile.coordY + 10, fill = 'red')
     window.after(1000, invader_fire) #nouveau tir toutes les secondes
-    return list_missiles_invader
+    return list_missile_invader
 invader_fire()
 
 #Joueur tir
-list_missiles_player = [] #liste des missiles du joueur en tant qu'objet
-
 def player_fire() :
     missile = Missile(player.coordX, player.coordY)
-    list_missiles_player.append(missile)
-    missile.view = canvas.create_line(missile.coordX, missile.coordY, missile.coordX, missile.coordYend, fill = 'blue')
+    list_missile_player.append(missile)
+    missile.view = canvas.create_line(missile.coordX, missile.coordY, missile.coordX, missile.coordY + 10, fill = 'blue')
 
 #Déplacement des miscilles
 def move_missile() :
-    for missile in list_missiles_invader :
+    for missile in list_missile_invader :
         missile.move(1)
-        canvas.coords(missile.view, missile.coordX, missile.coordY, missile.coordX, missile.coordYend)
-    for missile in list_missiles_player :
+        canvas.coords(missile.view, missile.coordX, missile.coordY, missile.coordX, missile.coordY + 10)
+    for missile in list_missile_player :
         missile.move(-1)
-        canvas.coords(missile.view, missile.coordX, missile.coordY, missile.coordX, missile.coordYend)
+        canvas.coords(missile.view, missile.coordX, missile.coordY, missile.coordX, missile.coordY +)
     window.after(500, move_missile)
 move_missile()
 
 
-#Perte de points de vie
-def touched() :
+#Perte de points de vie joueur
+def player_touched() :
     position = canvas.bbox(player_view) #liste avec les coordonnées (4) de la photo du joueur 
     list_touch_player = canvas.find_overlapping(position[0], position[1], position[2], position[3]) #liste des élément touchant/étant superposés au player
     for item in list_touch_player :
-        for missile in list_missiles_invader : 
+        for missile in list_missile_invader : 
             if item == missile.view : #si l'élément est un missile
                 player.hit()
-                list_missiles_invader.remove(missile)
+                list_missile_invader.remove(missile)
                 canvas.delete(missile.view)
         for invader in list_invader :
             if item == invader.view :
                 player.Hp = 0
                 invader.Hp = 0
-    window.after(50, touched)
-window.after(1000, touched)
+    window.after(50, player_touched)
+window.after(1000, player_touched)
+
+#Perte de points de vie invader
+def invader_touched() :
+    for invader in list_invader :
+        position = canvas.bbox(invader.view) #liste avec les coordonnées (4) de la photo de l'invader
+        list_touch_invader = canvas.find_overlapping(position[0], position[1], position[2], position[3]) #liste des élément touchant/étant superposés au player
+        for item in list_touch_invader :
+            for missile in list_missile_player : 
+                if item == missile.view : #si l'élément est un missile
+                    invader.hit()
+                    list_missile_player.remove(missile)
+                    canvas.delete(missile.view)
+    window.after(50, invader_touched)
+window.after(1000, invader_touched)
 
 #Perte de vie (player, invader ou bloc)
-def die() :
+def killed(list) :
+    #A faire tourner régulièrement
+    #objet peut être un invader, un bloc ou un missile
+    #list est la liste correspondante contenant l'objet
+    #supprime un élément n'ayant plus de point de vie
+    for objet in list :
+        if objet.Hp <= 0 :
+            list.remove(objet)
+            canvas.delete(objet.view)
+        
+def gameover() :
     if player.Hp <= 0 :
-        #game over
-        a=1 #A retirer
-    for invader in list_invader :
-        if invader.Hp <= 0 :
-            list_invader.remove(invader)
-            canvas.delete(invader.view)
-    window.after(10,die)
-die()
+        canvas.delete('all')
+        
+def repeat() :
+    #On appelle ici les fonction devant tourner constamment
+    killed()
+    gameover()
+    window.after(10,repeat)
+repeat()
 
 def clavier(event) :
     key = event.keysym
