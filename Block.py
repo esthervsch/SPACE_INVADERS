@@ -8,11 +8,11 @@ Classe Block
 
 
 class Block() :
-    def __init__(self, coordX, coordY):
+    def __init__(self, coordX, coordY, type):
         self.coordX = coordX
         self.coordY = coordY
-        self.Hp = 100
-
+        self.type = type
+        self.Hp = 50*self.type
 
 
 

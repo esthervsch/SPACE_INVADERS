@@ -17,5 +17,4 @@ class Missile :
 
     def move(self, sens) :
         self.coordY += game.speed*sens*15
-        self.coordYend += game.speed*sens*15
 

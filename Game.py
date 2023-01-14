@@ -17,19 +17,12 @@ class Game :
         self.level = level 
         self.difficulty = sqrt(level)
         self.speed = speed0*self.difficulty
+        self.score = 0 #somme de la vie des ennemis tué
         """
     def nextlevel
         if level passed :
             level +=1
-
-
-
-#Score
-
-def score() :
-    score = 
-
-
 """
 
-#Pour ajouter éléments à tk : créér un compte pour chaque list, if compte varie : ajouter / supr élement
+
+
