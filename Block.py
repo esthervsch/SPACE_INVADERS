@@ -8,11 +8,11 @@ Classe Block
 
 
 class Block() :
-    def __init__(self, coordX, coordY, type):
-        self.coordX = coordX
-        self.coordY = coordY
+    def __init__(self, type):
         self.type = type
         self.Hp = 50*self.type
+        self.color = ['mediumpurple', 'deepskyblue', 'limegreen', 'yellow', 'darkorange', 'red']
+        self.view = None
 
 
 

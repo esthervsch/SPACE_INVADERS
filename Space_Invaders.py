@@ -69,12 +69,30 @@ num_invader = 0
 list_missile_invader = [] #liste des missiles d'invader en tant qu'objet
 list_bloc = []
 
-#Chargement des images
-#image du joueur
-
-player = Player(width/2, height-78)  #78 = hauteur image +10
+#Chargement du joueur
 img_player = PhotoImage(file="images/player.png")
+player = Player(width/2, height - img_player.height() + 30)
 player.view = canvas.create_image(player.coordX, player.coordY, image=img_player)
+
+#Chargement des blocs
+#34 blocs 21 / 30
+block_width = width/21
+block_height = 20
+positionstartX = block_width #position de début des obstacle(=ensemble de bloc) abscisse
+positionstartY = height - img_player.height() - block_height#position de début des obstacle(=ensemble de bloc) ordonné
+while positionstartX <= 15*block_width : #On créé 3 obstacles
+    nbr_block = 5 #nombre de block par ligne (pour chaque obstacle)
+    while nbr_block >= 1 :
+        for i in range(nbr_block) : #on créé 34 blocs
+            block = Block(1)
+            block.color = block.color[block.type]
+            block.view = canvas.create_rectangle(positionstartX, positionstartY, positionstartX + block_width, positionstartY + block_height, fill= block.color[block.type-1])
+            positionstartX += block_width
+        positionstartX -= (nbr_block -1) * block_width
+        nbr_block -= 2
+        positionstartY -= block_height
+    positionstartX += 4*block_width
+    positionstartY += 3*block_height
 
 #images des invaders
 def pop_up_invader() :          #gère l'apparition des invaders
