@@ -21,7 +21,7 @@ class Block() :
 
     def var_color(self) : #Couleur des block dépendant de leur point de vie
         choixcouleur = int((self.Hp-1)/50)
-        if choixcouleur > len(self.colorlist) :
+        while choixcouleur >= len(self.colorlist) :
             choixcouleur -= len(self.colorlist)
         self.color = self.colorlist[choixcouleur]
 

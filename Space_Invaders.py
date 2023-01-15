@@ -13,6 +13,7 @@ from Invader import *
 from Block import *
 from tkinter import * #morrel dit ok
 import random
+from time import(sleep)
 
 window = Tk()
 window.title("Space Invaders")
@@ -69,12 +70,14 @@ def reset() :
 #Nouvelle partie
 def newgame() :
     if play==1:
+        show_score()
         global player
         player = pop_up_player()
         window.bind('<Key>',clavier)
+        show_health()
         pop_up_bloc()
         pop_up_invader()
-        move_invaders()
+        move_invader()
         invader_fire()
         move_missile()
         repeat()
@@ -88,14 +91,17 @@ def start():
 buttonQuitter = Button(menu, text = "Quit game", command = window.destroy).pack(side = "left")
 buttonStart = Button(menu, text = "Start game", command = start).pack(side = "right")
 
-#Affichage score
-score_view = Label(frame_score, text = "Score : " + str(game.score)) #font = ('Helvetica', 10))
-score_view.pack()
+#Affichage information sur partie
+score_view = Label(frame_score, text = "Score : " + str(game.score) + "  |  Level : " + str(game.level), font = ('Helvetica', 10))
+health_view = Label(frame_score, text = "|  Hp : 0", font = ('Helvetica', 10))
+score_view.pack(side = "left")
+health_view.pack(side = "right")
 
 def show_score() :
-    global score_view
-    score_view.config(text = "Score : " + str(game.score))
-    
+    score_view.config(text = "Score : " + str(game.score) + "  |  Level : " + str(game.level))
+
+def show_health() :
+    health_view.config(text = "|  Hp : " + str(player.Hp))
 
 #Chargement du joueur
 def pop_up_player() :
@@ -152,11 +158,10 @@ def pop_up_invader() :          #gère l'apparition des invaders
         window.after(10000, pop_up_invader) #nouvel invader toutes les 10s
 
 #Déplacement des invaders
-def move_invaders() :
+def move_invader() :
     for invader in list_invader :
-        invader.move()
+        invader.move(width)
         canvas.coords(invader.view, invader.coordX , invader.coordY)
-    window.after(200, move_invaders) #répete le mouvement toutes les 0,2 secondes
 
 #Apparition des tirs des invaders
 def invader_fire() :
@@ -181,7 +186,6 @@ def move_missile() :
     for missile in list_missile_player :
         missile.move(-1)
         canvas.coords(missile.view, missile.coordX, missile.coordY, missile.coordX, missile.coordY + 10)
-    window.after(200, move_missile)
 
 #Récupérer la list des éléments superposés à élément
 def surface(element) :
@@ -200,12 +204,13 @@ def player_touched() :
                 player.hit()
                 list_missile_invader.remove(missile)
                 canvas.delete(missile.view)
+                show_health()
+                gameover()
         for invader in list_invader :
             if item == invader.view : #si l'élément est un invader
                 player.Hp = 0
+                show_health()
                 gameover()
-                
-    window.after(50, player_touched)
 
 #Perte de points de vie invader
 def invader_touched() :
@@ -217,7 +222,11 @@ def invader_touched() :
                     invader.hit()
                     list_missile_player.remove(missile)
                     canvas.delete(missile.view)
-    window.after(50, invader_touched)
+                    show_score()
+            for block in list_block :
+                if item == block.view :
+                    list_invader.remove(invader)
+                    canvas.delete(invader.view)
 
 #Perte de points de vie block
 def block_touched() :
@@ -234,10 +243,6 @@ def block_touched() :
                 if item == missile.view :
                     list_missile_player.remove(missile)
                     canvas.delete(missile.view)
-            for invader in list_invader :
-                if item == invader :
-                    list_invader.remove(invader)
-                    canvas.delete(invader.view)
                     
                         
 
@@ -251,6 +256,7 @@ def killed(list) :
         if objet.Hp <= 0 :
             if list == list_invader :
                 game.score += objet.Hplist[objet.type-1] #le score augmente du nombre de pv le l'ennemi tué
+                show_score()
             list.remove(objet)
             canvas.delete(objet.view)
             
@@ -264,6 +270,7 @@ def out_canvas(list_missile) : #On supprime les éléments en dehors du canvas
 def gameover() :
     if player.Hp <= 0 :
         canvas.delete('all')
+        sleep(10)
 
 def level_won() :
     reste_invader = 0
@@ -275,16 +282,16 @@ def level_won() :
 
 def repeat() :
     #On appelle ici les fonction devant tourner constamment
+    move_invader()
+    move_missile()
     block_touched()
     invader_touched()
     player_touched()
     killed(list_block)
     killed(list_invader)
-    gameover()
     level_won()
     out_canvas(list_missile_invader)
     out_canvas(list_missile_player)
-    show_score()
     window.after(50,repeat)
 
 def clavier(event) :
