@@ -6,6 +6,7 @@ Space_Invaders
 Fenetre de jeu
 """
 from Game import *
+game = Game(1, 0, 1)
 from Player import *
 from Missile import *
 from Invader import *
@@ -35,29 +36,8 @@ ranking.pack(side="left")
 menu = Frame(window, relief="groove", bg="white")
 menu.pack(side="bottom")
 
-#Nouvelle partie
-def starty(s) :
-    if s==1:
-        score = 0
-        speed0 = 10
-        level = 1
-
-s=0
-def schange():
-    s=1
-    starty(s)
-
-
-buttonQuitter = Button(menu, text = "Quit game", command = window.destroy).pack()
-buttonStart = Button(window, text = "Start game", command = schange).pack()
-
-
-#Score à récup via objet player in game
-score= game.score
-#Add a text in Canvas
-canvas.create_text(150, 50, text="Score : "+str(score), fill="white", font=('Helvetica 15 bold'))
-canvas.pack()
-
+#Initialisation jeu
+play = 0 #La partie commence pour play = 1
 
 list_missile_player = [] #liste des missiles du joueur en tant qu'objet
 list_invader = [] #liste des invaders en tant qu'objet
@@ -68,48 +48,76 @@ for i in range(100) :
 num_invader = 0
 list_missile_invader = [] #liste des missiles d'invader en tant qu'objet
 list_block = []
+img_player = None
+player = None
+#Nouvelle partie
+def newgame(play) :
+    if play==1:
+        global player
+        player = pop_up_player()
+        window.bind('<Key>',clavier)
+        pop_up_bloc()
+        pop_up_invader()
+        move_invaders()
+        invader_fire()
+        move_missile()
+        repeat()
+        
+def start():
+    play = 1
+    newgame(play)
+
+buttonQuitter = Button(menu, text = "Quit game", command = window.destroy).pack()
+buttonStart = Button(window, text = "Start game", command = start).pack()
+
+#Affichage score
+canvas.create_text(150, 50, text="Score : "+str(game.score), fill="white", font=('Helvetica 15 bold'))
+canvas.pack()
+
 
 #Chargement du joueur
-img_player = PhotoImage(file="images/player.png")
-player = Player(width/2, height - img_player.height() + 30)
-player.view = canvas.create_image(player.coordX, player.coordY, image=img_player)
+def pop_up_player() :
+    global img_player
+    img_player = PhotoImage(file="images/player.png")
+    player = Player(width/2, height - img_player.height() + 30, game)
+    player.view = canvas.create_image(player.coordX, player.coordY, image=img_player)
+    return player
 
 #Chargement des blocs
-#34 blocs 21 / 30
-block_width = width/21
-block_height = 20
-positionstartX = block_width #position de début des obstacle(=ensemble de bloc) abscisse
-positionstartY = height - img_player.height() - block_height#position de début des obstacle(=ensemble de bloc) ordonné
-while positionstartX <= 15*block_width : #On créé 3 obstacles
-    nbr_block = 5 #nombre de block par ligne (pour chaque obstacle)
-    block_type = 0
-    while nbr_block >= 1 :
-        for i in range(nbr_block) : #on créé 34 blocs
-            block = Block(game.level + block_type)
-            block.var_color()
-            block.view = canvas.create_rectangle(positionstartX, positionstartY, positionstartX + block_width, positionstartY + block_height, fill= block.color)
-            list_block.append(block)
-            positionstartX += block_width
-        positionstartX -= (nbr_block - 1) * block_width
-        positionstartY -= block_height
-        nbr_block -= 2
-        block_type += 1
-    positionstartX += 4*block_width
-    positionstartY += 3*block_height
+def pop_up_bloc() :
+    block_width = width/21
+    block_height = 20
+    positionstartX = block_width #position de début des obstacle(=ensemble de bloc) abscisse
+    positionstartY = height - img_player.height() - block_height#position de début des obstacle(=ensemble de bloc) ordonné
+    while positionstartX <= 15*block_width : #On créé 3 obstacles
+        nbr_block = 5 #nombre de block par ligne (pour chaque obstacle)
+        block_type = 0
+        while nbr_block >= 1 : #boucle qui créée un obstable
+            for i in range(nbr_block) : #boucle qui créée un ligne de l'obstacle
+                block = Block(game.level + block_type, game)
+                block.var_color()
+                block.view = canvas.create_rectangle(positionstartX, positionstartY, positionstartX + block_width, positionstartY + block_height, fill= block.color)
+                list_block.append(block)
+                positionstartX += block_width
+            positionstartX -= (nbr_block - 1) * block_width
+            positionstartY -= block_height
+            nbr_block -= 2
+            block_type += 1
+        positionstartX += 4*block_width
+        positionstartY += 3*block_height
 
 #Variartion couleur des blocs
 def bloc_color() :
     for block in list_block :
         block.var_color()
         canvas.itemconfig(block.view, fill = block.color)
-    window.after(10, bloc_color)
-window.after(1000, bloc_color)
+
 #images des invaders
 def pop_up_invader() :          #gère l'apparition des invaders
     coordX = width/2
     coordY = 100
     types = random.choice([1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,3,3,3]) #genère un nombre aléatoire entre 1 et 3 avec différentes probabilités pour choisir le type d'invader :(1, 2, 3), p=[0.5, 0.35, 0.15]
-    invader = Invader(coordX, coordY, types)  #centre de la fenetre en haut
+    invader = Invader(coordX, coordY, types, game)  #centre de la fenetre en haut
     invader.imagefile = invader.imagefile[invader.type-1] #on lui assigne l'image corespondante (remplace la liste par le choix)
     invader.Hp = invader.Hp[types-1]
     list_invader.append(invader) #On ajoute l'invader à la liste d'invaders
@@ -119,34 +127,28 @@ def pop_up_invader() :          #gère l'apparition des invaders
     invader.view = canvas.create_image(invader.coordX, invader.coordY, image=list_invader_img[num_invader])
     num_invader += 1
     window.after(10000, pop_up_invader) #nouvel invader toutes les 10s
-    return list_invader
-pop_up_invader() #on attend pas pour faire apparaitre le premier invader
-
-
 
 #Déplacement des invaders
 def move_invaders() :
     for invader in list_invader :
         invader.move()
-        canvas. coords(invader.view, invader.coordX , invader.coordY)
-    window.after(200, move_invaders) #répete le mouvement toutes les secondes
-move_invaders()
+        canvas.coords(invader.view, invader.coordX , invader.coordY)
+    window.after(200, move_invaders) #répete le mouvement toutes les 0,2 secondes
 
 #Apparition des tirs des invaders
 def invader_fire() :
     for invader in list_invader :
-        missile = Missile(invader.coordX, invader.coordY)
+        missile = Missile(invader.coordX, invader.coordY, game)
         list_missile_invader.append(missile)
         missile.view = canvas.create_line(missile.coordX, missile.coordY, missile.coordX, missile.coordY + 10, fill = 'red')
     window.after(1000, invader_fire) #nouveau tir toutes les secondes
-invader_fire()
 
 #Joueur tir
 def player_fire() :
-    missile = Missile(player.coordX, player.coordY)
+    missile = Missile(player.coordX, player.coordY, game)
     list_missile_player.append(missile)
     missile.view = canvas.create_line(missile.coordX, missile.coordY, missile.coordX, missile.coordY + 10, fill = 'blue')
-    #return list?
+
     
 #Déplacement des miscilles
 def move_missile() :
@@ -157,13 +159,13 @@ def move_missile() :
         missile.move(-1)
         canvas.coords(missile.view, missile.coordX, missile.coordY, missile.coordX, missile.coordY + 10)
     window.after(200, move_missile)
-move_missile()
 
 #Récupérer la list des éléments superposés à élément
 def surface(element) :
     position = canvas.bbox(element.view) #liste avec les coordonnées (4) de la photo du joueur 
     list_touch = canvas.find_overlapping(position[0], position[1], position[2], position[3]) #liste des élément touchant/étant superposés au player
     return list_touch
+
 #Perte de points de vie joueur
 def player_touched() :
     list_touch_player = surface(player)
@@ -177,7 +179,6 @@ def player_touched() :
                 player.Hp = 0
                 invader.Hp = 0
     window.after(50, player_touched)
-window.after(1000, player_touched)
 
 #Perte de points de vie invader
 def invader_touched() :
@@ -189,7 +190,6 @@ def invader_touched() :
                     invader.hit()
                     missile.Hp = 0
     window.after(50, invader_touched)
-window.after(1000, invader_touched)
 
 #Perte de points de vie block
 def block_touched() :
@@ -226,14 +226,16 @@ def gameover() :
 
 def repeat() :
     #On appelle ici les fonction devant tourner constamment
+    bloc_color()
     block_touched()
+    invader_touched()
+    player_touched()
     killed(list_block)
     killed(list_invader)
     killed(list_missile_invader)
     killed(list_missile_player)
     gameover()
     window.after(10,repeat)
-repeat()
 
 def clavier(event) :
     key = event.keysym
@@ -244,7 +246,5 @@ def clavier(event) :
     canvas.coords(player.view, player.coordX , player.coordY)
     if key == 'space' :
         player_fire()
-window.bind('<Key>',clavier)
-
 
 window.mainloop()

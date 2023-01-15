@@ -5,11 +5,10 @@ CSDEV TP4
 Space_Invaders
 Classe Invader
 """
-from Game import Game
 import random
-game = Game(1) #a retier
+
 class Invader :                #cette classe décrit 3 types d'invaders
-    def __init__(self, coordX, coordY, type) :
+    def __init__(self, coordX, coordY, type, game) :
         self.coordX = coordX
         self.coordY = coordY
         self.type = type
@@ -18,6 +17,7 @@ class Invader :                #cette classe décrit 3 types d'invaders
         self.speed = [game.speed,game.speed]         #dépend du level
         self.freq = 3
         self.imagefile = ["images/invader1.png", "images/invader2.png", "images/invader3.png"]
+        self.game = game
         
     def move(self) :
         #On déplace en fonction du type d'invader
@@ -37,5 +37,5 @@ class Invader :                #cette classe décrit 3 types d'invaders
             self.coordX += self.speed[0]*5*random.choice([-1,1])
             self.coordY += self.speed[1]*2
     def hit(self) :
-        self.Hp -= 20*game.difficulty #perte de point par miscille
+        self.Hp -= 20*self.game.difficulty #perte de point par miscille
         

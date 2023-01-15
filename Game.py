@@ -5,23 +5,20 @@ CSDEV TP4
 Space_Invaders
 Classe Game
 """
-
-speed0 =1 #A retirer
-
 from math import sqrt
 
-from tkinter import *
         
 class Game :
-    def __init__ (self, level) :
-        self.level = level 
+    def __init__ (self, level, score, speed) :
+        self.level = level
+        self.score = score
+        self.speed = speed
         self.difficulty = sqrt(level)
-        self.speed = speed0*self.difficulty
-        self.score = 0 #somme de la vie des ennemis tué
         """
-    def nextlevel
-        if level passed :
-            level +=1
+    def nextlevel ()
+        self.level +=1
+        self.speed = self.speed*self.difficulty
+        
 """
 
 
