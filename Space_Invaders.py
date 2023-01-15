@@ -43,15 +43,24 @@ list_missile_player = [] #liste des missiles du joueur en tant qu'objet
 list_invader = [] #liste des invaders en tant qu'objet
 list_invader_img = [] #liste des invaders en tant qu'images
 for i in range(100) :
-    globals()['img_invader' + str(i-1)] = None
-    list_invader_img.append('img_invader' + str(i-1))
+    i = None
+    list_invader_img.append(i)
 num_invader = 0
 list_missile_invader = [] #liste des missiles d'invader en tant qu'objet
 list_block = []
 img_player = None
 player = None
+
+def reset() :
+    list_missile_player.clear()
+    list_invader.clear()
+    list_invader_img.clear()
+    list_missile_invader.clear()
+    list_block.clear()
+    return 0
+    
 #Nouvelle partie
-def newgame(play) :
+def newgame() :
     if play==1:
         global player
         player = pop_up_player()
@@ -64,8 +73,9 @@ def newgame(play) :
         repeat()
         
 def start():
+    global play
     play = 1
-    newgame(play)
+    newgame()
 
 buttonQuitter = Button(menu, text = "Quit game", command = window.destroy).pack()
 buttonStart = Button(window, text = "Start game", command = start).pack()
@@ -122,10 +132,17 @@ def pop_up_invader() :          #gère l'apparition des invaders
     list_invader.append(invader) #On ajoute l'invader à la liste d'invaders
     global list_invader_img
     global num_invader
+    print(str(num_invader))
     list_invader_img[num_invader]= PhotoImage(file = invader.imagefile)
     invader.view = canvas.create_image(invader.coordX, invader.coordY, image=list_invader_img[num_invader])
     num_invader += 1
-    window.after(10000, pop_up_invader) #nouvel invader toutes les 10s
+    if num_invader <= game.max_invader :
+        window.after(10000, pop_up_invader) #nouvel invader toutes les 10s
+    else :
+        game.nextlevel()
+        canvas.delete('all')
+        num_invader = reset()
+        newgame()
 
 #Déplacement des invaders
 def move_invaders() :

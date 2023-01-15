@@ -14,12 +14,11 @@ class Game :
         self.score = score
         self.speed = speed
         self.difficulty = sqrt(level)
-        """
-    def nextlevel ()
+        self.max_invader = 2
+
+    def nextlevel(self) :
         self.level +=1
         self.speed = self.speed*self.difficulty
+        self.max_invader +=1
         
-"""
-
-
 
