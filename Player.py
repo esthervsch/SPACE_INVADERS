@@ -20,6 +20,7 @@ class Player :
         self.game = game
     def hit(self) :
         self.Hp -= 20*self.game.difficulty #perte de point par miscille
+        print(str(self.Hp))
         
 
     
