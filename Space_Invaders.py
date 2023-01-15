@@ -17,8 +17,15 @@ import random
 window = Tk()
 window.title("Space Invaders")
 
+#Création des différentes frames
+menu = Frame(window, relief = "groove", bg = "white")
+menu.pack(side="bottom")
+
+frame_score = Frame(window, relief = "groove", bg = "white")
+frame_score.pack(side = "top")
+
 #Création canevas
-height = 600
+height = 500
 width = 400
 
 canvas = Canvas(window, width = width, height = height, bg="black")
@@ -30,21 +37,17 @@ canvas.pack()
 #canvas.create_image(0, 0, image=photo_backgroundbis)
 
 
-#Création des différentes frames
-ranking = Frame(window, relief="groove")
-ranking.pack(side="left")
-menu = Frame(window, relief="groove", bg="white")
-menu.pack(side="bottom")
 
 #Initialisation jeu
 play = 0 #La partie commence pour play = 1
 
 list_missile_player = [] #liste des missiles du joueur en tant qu'objet
 list_invader = [] #liste des invaders en tant qu'objet
-list_invader_img = [] #liste des invaders en tant qu'images
+list_invader_img_reset = [] 
 for i in range(100) :
     i = None
-    list_invader_img.append(i)
+    list_invader_img_reset.append(i)
+list_invader_img = list(list_invader_img_reset) #liste des invaders en tant qu'images
 num_invader = 0
 list_missile_invader = [] #liste des missiles d'invader en tant qu'objet
 list_block = []
@@ -52,12 +55,16 @@ img_player = None
 player = None
 
 def reset() :
+    game.nextlevel()
+    canvas.delete('all')
     list_missile_player.clear()
     list_invader.clear()
-    list_invader_img.clear()
+    global list_invader_img
+    list_invader_img = list(list_invader_img_reset)
     list_missile_invader.clear()
     list_block.clear()
-    return 0
+    global num_invader
+    num_invader = 0
     
 #Nouvelle partie
 def newgame() :
@@ -77,13 +84,18 @@ def start():
     play = 1
     newgame()
 
-buttonQuitter = Button(menu, text = "Quit game", command = window.destroy).pack()
-buttonStart = Button(window, text = "Start game", command = start).pack()
+#Construction menu
+buttonQuitter = Button(menu, text = "Quit game", command = window.destroy).pack(side = "left")
+buttonStart = Button(menu, text = "Start game", command = start).pack(side = "right")
 
 #Affichage score
-canvas.create_text(150, 50, text="Score : "+str(game.score), fill="white", font=('Helvetica 15 bold'))
-canvas.pack()
+score_view = Label(frame_score, text = "Score : " + str(game.score)) #font = ('Helvetica', 10))
+score_view.pack()
 
+def show_score() :
+    global score_view
+    score_view.config(text = "Score : " + str(game.score))
+    
 
 #Chargement du joueur
 def pop_up_player() :
@@ -124,11 +136,11 @@ def bloc_color(block) :
 #images des invaders
 def pop_up_invader() :          #gère l'apparition des invaders
     coordX = width/2
-    coordY = 100
+    coordY = 50
     types = random.choice([1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,3,3,3]) #genère un nombre aléatoire entre 1 et 3 avec différentes probabilités pour choisir le type d'invader :(1, 2, 3), p=[0.5, 0.35, 0.15]
     invader = Invader(coordX, coordY, types, game)  #centre de la fenetre en haut
     invader.imagefile = invader.imagefile[invader.type-1] #on lui assigne l'image corespondante (remplace la liste par le choix)
-    invader.Hp = invader.Hp[types-1]
+    invader.Hp = invader.Hplist[types-1]
     list_invader.append(invader) #On ajoute l'invader à la liste d'invaders
     global list_invader_img
     global num_invader
@@ -136,13 +148,8 @@ def pop_up_invader() :          #gère l'apparition des invaders
     list_invader_img[num_invader]= PhotoImage(file = invader.imagefile)
     invader.view = canvas.create_image(invader.coordX, invader.coordY, image=list_invader_img[num_invader])
     num_invader += 1
-    if num_invader <= game.max_invader :
+    if num_invader < game.max_invader :
         window.after(10000, pop_up_invader) #nouvel invader toutes les 10s
-    else :
-        game.nextlevel()
-        canvas.delete('all')
-        num_invader = reset()
-        newgame()
 
 #Déplacement des invaders
 def move_invaders() :
@@ -242,8 +249,11 @@ def killed(list) :
     #supprime un élément n'ayant plus de point de vie
     for objet in list :
         if objet.Hp <= 0 :
+            if list == list_invader :
+                game.score += objet.Hplist[objet.type-1] #le score augmente du nombre de pv le l'ennemi tué
             list.remove(objet)
             canvas.delete(objet.view)
+            
 
 def out_canvas(list_missile) : #On supprime les éléments en dehors du canvas
     for missile in list_missile :
@@ -255,6 +265,14 @@ def gameover() :
     if player.Hp <= 0 :
         canvas.delete('all')
 
+def level_won() :
+    reste_invader = 0
+    for invader in list_invader :
+        reste_invader += invader.Hp
+    if reste_invader == 0 and num_invader == game.max_invader: #si les invaders sont tous mort
+        reset()
+        newgame()
+
 def repeat() :
     #On appelle ici les fonction devant tourner constamment
     block_touched()
@@ -263,16 +281,18 @@ def repeat() :
     killed(list_block)
     killed(list_invader)
     gameover()
+    level_won()
     out_canvas(list_missile_invader)
     out_canvas(list_missile_player)
+    show_score()
     window.after(50,repeat)
 
 def clavier(event) :
     key = event.keysym
     if key == 'Left' :
-        player.coordX -= 5
+        player.coordX -= player.speed
     if key == 'Right' :
-        player.coordX += 5
+        player.coordX += player.speed
     canvas.coords(player.view, player.coordX , player.coordY)
     if key == 'space' :
         player_fire()

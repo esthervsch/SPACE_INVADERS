@@ -13,9 +13,9 @@ class Invader :                #cette classe décrit 3 types d'invaders
         self.coordY = coordY
         self.type = type
         self.view = None
-        self.Hp = [100*game.difficulty, 150*game.difficulty, 250*game.difficulty]
+        self.Hplist = [100*game.difficulty, 150*game.difficulty, 250*game.difficulty]
+        self.Hp = None
         self.speed = [game.speed,game.speed]         #dépend du level
-        self.freq = 3
         self.imagefile = ["images/invader1.png", "images/invader2.png", "images/invader3.png"]
         self.game = game
         

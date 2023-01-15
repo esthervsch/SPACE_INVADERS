@@ -6,7 +6,6 @@ Space_Invaders
 Classe Game
 """
 from math import sqrt
-
         
 class Game :
     def __init__ (self, level, score, speed) :
@@ -17,8 +16,9 @@ class Game :
         self.max_invader = 2
 
     def nextlevel(self) :
-        self.level +=1
-        self.speed = self.speed*self.difficulty
-        self.max_invader +=1
+        self.level += 1
+        self.speed += self.speed*0.01*self.difficulty
+        self.max_invader += 1
+
         
 
