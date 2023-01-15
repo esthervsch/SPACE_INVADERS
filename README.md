@@ -1,7 +1,6 @@
 # SPACE_INVADERS
-SPACE INVADERS
 
+Esther Veschambre et Bertrand Gaillet
 
-#les règles du jeu et les spécificités de votre
-#implémentation, l’adresse de votre répertoire GIT, et où se trouvent les implémentations des structures
-#de données demandées
+lien github:
+git@github.com:esthervsch/SPACE_INVADERS.git
