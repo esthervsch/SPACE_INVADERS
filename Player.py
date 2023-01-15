@@ -17,6 +17,13 @@ class Player :
 
     def hit(self) :
         self.Hp -= 20*self.game.difficulty #perte de point par miscille
+    
+    def move(self, sens, width) : #sens négatif si vers la gauche
+        self.coordX += self.speed*sens
+        if self.coordX >= width :
+            self.coordX -= width
+        if self.coordX <= 0 :
+            self.coordX += width
         
 
     

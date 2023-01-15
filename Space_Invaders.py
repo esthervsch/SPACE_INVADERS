@@ -290,9 +290,9 @@ def repeat() :
 def clavier(event) :
     key = event.keysym
     if key == 'Left' :
-        player.coordX -= player.speed
+        player.move(-1, width)
     if key == 'Right' :
-        player.coordX += player.speed
+        player.move(1, width)
     canvas.coords(player.view, player.coordX , player.coordY)
     if key == 'space' :
         player_fire()
