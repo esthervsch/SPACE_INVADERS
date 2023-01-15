@@ -3,7 +3,7 @@ Esther Veschambre et Bertrand Gaillet
 15/12/2022
 CSDEV TP4
 Space_Invaders
-Fenetre de jeu
+Fenetre de jeu/Programme principal
 """
 from Game import *
 game = Game(1, 0, 1)
@@ -56,6 +56,7 @@ img_player = None
 player = None
 
 def reset() :
+    #Permet de réinitialiser poour passer au niveau suivant
     game.nextlevel()
     canvas.delete('all')
     list_missile_player.clear()
@@ -134,7 +135,7 @@ def pop_up_bloc() :
         positionstartX += 4*block_width
         positionstartY += 3*block_height
 
-#Variartion couleur des blocs
+#Variartion couleur des blocks
 def bloc_color(block) :
     block.var_color()
     canvas.itemconfig(block.view, fill = block.color)
@@ -154,7 +155,7 @@ def pop_up_invader() :          #gère l'apparition des invaders
     list_invader_img[num_invader]= PhotoImage(file = invader.imagefile)
     invader.view = canvas.create_image(invader.coordX, invader.coordY, image=list_invader_img[num_invader])
     num_invader += 1
-    if num_invader < game.max_invader :
+    if num_invader < game.max_invader : #on en génère jusqu'à ce qu'on atteigne le nombre d'invaders du niveau
         window.after(10000, pop_up_invader) #nouvel invader toutes les 10s
 
 #Déplacement des invaders
@@ -249,7 +250,7 @@ def block_touched() :
 #Perte de vie (player, invader ou bloc)
 def killed(list) :
     #A faire tourner régulièrement
-    #objet peut être un invader, un bloc ou un missile
+    #objet peut être un invader ou un bloc
     #list est la liste correspondante contenant l'objet
     #supprime un élément n'ayant plus de point de vie
     for objet in list :
